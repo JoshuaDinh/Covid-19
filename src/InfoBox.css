@@ -1,0 +1,42 @@
+.infoBox {
+  text-align: center;
+  background-color: #0e1013;
+  color: #f5f5f5;
+  padding: 10px;
+  height: 150px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.infoBox-box {
+  border: 1px solid white;
+  height: 107px;
+  align-items: center;
+}
+
+.infoBox--selected {
+  border-top: 2px solid greenyellow;
+}
+
+.infoBox--red {
+  border-color: #ed3e15;
+}
+
+.infoBox__cases--green {
+  color: lightgreen !important;
+}
+
+.infoBox__cases {
+  color: #ed3e15;
+  font-weight: 600;
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.infoBox__total {
+  color: whitesmoke;
+  font-weight: 700 !important;
+  font-size: 0.8rem !important;
+  margin-top: 15px !important;
+}

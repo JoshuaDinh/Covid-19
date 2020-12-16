@@ -1,0 +1,46 @@
+.table {
+  overflow: scroll;
+  color: whitesmoke;
+  background-color: #0e1013;
+  height: 70vh;
+  width: 210px;
+  margin-top: 15px;
+  padding: 10px;
+  overflow-x: hidden;
+  border-radius: 5px;
+}
+
+.secondary {
+  width: 160px;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.table > h4 {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.table tr {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid whitesmoke;
+}
+
+.table td {
+  padding: 0.5rem;
+  color: whitesmoke;
+  font-size: 12px;
+}
+
+.table td:first-child {
+  color: #fc3c3c;
+}
+
+.table tr:nth-of-type(odd) {
+  background-color: #0e1013;
+}
