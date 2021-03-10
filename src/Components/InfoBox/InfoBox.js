@@ -1,5 +1,6 @@
 import React from "react";
 import "./InfoBox.css";
+import { connect } from "react-redux";
 
 function InfoBox({ title, cases, secondary, total, active, isRed, ...props }) {
   console.log(title, active);

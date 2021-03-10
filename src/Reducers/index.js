@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import { countryDataReducer } from "../Reducers/countryDataReducer";
+import { fetchCountryInfoReducer } from "../Reducers/countryDataReducer";
+import { fetchCountryDataReducer } from "../Reducers/countryDataReducer";
 
 export const rootReducers = combineReducers({
-  countryData: countryDataReducer,
+  countryInfo: fetchCountryInfoReducer,
+  countryData: fetchCountryDataReducer,
 });

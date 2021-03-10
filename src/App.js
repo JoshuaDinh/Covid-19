@@ -13,50 +13,30 @@ import numeral from "numeral";
 import Map from "./Components/Map/Map";
 import "leaflet/dist/leaflet.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { fetchCountryInfo } from "./Actions";
+import { fetchCountryData } from "./Actions";
 
-const App = () => {
+const App = ({
+  fetchCountryInfo,
+  fetchCountryData,
+  casesData,
+  deathData,
+  recoveredData,
+}) => {
   const [country, setInputCountry] = useState("World Wide");
   const [countryInfo, setCountryInfo] = useState({});
   const [countries, setCountries] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
-  const [casesData, setCasesData] = useState([]);
-  const [deathData, setDeathData] = useState([]);
+
   const [recoveryData, setRecoveryData] = useState([]);
-  const [recoveredData, setRecoveredData] = useState([]);
   const [casesType, setCasesType] = useState("cases");
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [mapZoom, setMapZoom] = useState(3);
 
   useEffect(() => {
-    fetch("https://disease.sh/v3/covid-19/all")
-      .then((response) => response.json())
-      .then((data) => {
-        setCountryInfo(data);
-      });
-  }, []);
-
-  useEffect(() => {
-    const getCountriesData = async () => {
-      fetch("https://disease.sh/v3/covid-19/countries")
-        .then((response) => response.json())
-        .then((data) => {
-          const countries = data.map((country) => ({
-            name: country.country,
-            value: country.countryInfo.iso2,
-          }));
-          let sortedCases = sortCases(data);
-          let sortedDeaths = sortDeaths(data);
-          let sortedRecovered = sortRecovered(data);
-          setCountries(countries);
-          setMapCountries(data);
-          setCasesData(sortedCases);
-          setDeathData(sortedDeaths);
-          setRecoveryData(sortedRecovered);
-          setRecoveredData();
-        });
-    };
-
-    getCountriesData();
+    fetchCountryInfo();
+    fetchCountryData();
   }, []);
 
   const onCountryChange = async (e) => {
@@ -98,7 +78,7 @@ const App = () => {
     );
   });
 
-  const countryRecovered = recoveryData.map((country) => {
+  const countryRecovered = recoveredData.map((country) => {
     return (
       <tr>
         <td>
@@ -198,4 +178,22 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    countryInfo: state.countryInfo.countryInfo,
+    casesData: state.countryData.casesData,
+    deathData: state.countryData.deathData,
+    recoveredData: state.countryData.recoveredData,
+    countries: state.countryData.countries,
+    mapCountries: state.countryData.mapcountries,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchCountryInfo: () => dispatch(fetchCountryInfo()),
+    fetchCountryData: () => dispatch(fetchCountryData()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
