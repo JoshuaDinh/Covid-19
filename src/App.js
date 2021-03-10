@@ -14,47 +14,32 @@ import Map from "./Components/Map/Map";
 import "leaflet/dist/leaflet.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchCountryInfo } from "./Actions";
+import { fetchCountryTotals } from "./Actions";
 import { fetchCountryData } from "./Actions";
+import { fetchMapInfo } from "./Actions/mapActions";
 
 const App = ({
-  fetchCountryInfo,
+  fetchCountryTotals,
   fetchCountryData,
+  fetchMapInfo,
   casesData,
   deathData,
   recoveredData,
+  countryTotals,
+  countries,
 }) => {
   const [country, setInputCountry] = useState("World Wide");
   const [countryInfo, setCountryInfo] = useState({});
-  const [countries, setCountries] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
-
   const [recoveryData, setRecoveryData] = useState([]);
   const [casesType, setCasesType] = useState("cases");
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [mapZoom, setMapZoom] = useState(3);
 
   useEffect(() => {
-    fetchCountryInfo();
+    fetchCountryTotals();
     fetchCountryData();
   }, []);
-
-  const onCountryChange = async (e) => {
-    const countryCode = e.target.value;
-
-    const url =
-      countryCode === "worldwide"
-        ? "https://disease.sh/v3/covid-19/all"
-        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
-    await fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        setInputCountry(countryCode);
-        setCountryInfo(data);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(2);
-      });
-  };
 
   const countryCases = casesData.map((country) => {
     return (
@@ -100,8 +85,8 @@ const App = ({
                 title="Total Cases"
                 isRed
                 active={casesType === "cases"}
-                cases={prettyPrintStat(countryInfo.cases)}
-                total={numeral(countryInfo.cases).format("0.0a")}
+                cases={prettyPrintStat(countryTotals.cases)}
+                total={numeral(countryTotals.cases).format("0.0a")}
               />
             </div>
             <Table
@@ -114,7 +99,7 @@ const App = ({
               <Select
                 className="app__dropdown-menu"
                 value={country}
-                onChange={onCountryChange}
+                onChange={fetchMapInfo}
               >
                 <MenuItem className="app__dropdown-menu" value={country}>
                   {country}
@@ -145,7 +130,7 @@ const App = ({
                 title="Total Recovered"
                 active={casesType === "recovered"}
                 cases={prettyPrintStat(countryInfo.recovered)}
-                total={numeral(countryInfo.recovered).format("0.0a")}
+                total={numeral(countryTotals.recovered).format("0.0a")}
               />
 
               <Table
@@ -161,8 +146,8 @@ const App = ({
                 title="Total  Deaths"
                 isRed
                 active={casesType === "deaths"}
-                cases={prettyPrintStat(countryInfo.deaths)}
-                total={numeral(countryInfo.deaths).format("0.0a")}
+                cases={prettyPrintStat(countryTotals.deaths)}
+                total={numeral(countryTotals.deaths).format("0.0a")}
               />
 
               <Table
@@ -180,7 +165,7 @@ const App = ({
 
 const mapStateToProps = (state) => {
   return {
-    countryInfo: state.countryInfo.countryInfo,
+    countryTotals: state.countryTotals.countryTotals,
     casesData: state.countryData.casesData,
     deathData: state.countryData.deathData,
     recoveredData: state.countryData.recoveredData,
@@ -191,8 +176,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCountryInfo: () => dispatch(fetchCountryInfo()),
+    fetchCountryTotals: () => dispatch(fetchCountryTotals()),
     fetchCountryData: () => dispatch(fetchCountryData()),
+    fetchMapInfo: () => dispatch(fetchMapInfo()),
   };
 };
 

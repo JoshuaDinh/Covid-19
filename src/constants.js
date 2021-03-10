@@ -1,7 +1,14 @@
-export const FETCH_COUNTRY_INFO = "FETCH_COUNTRY_INFO";
+export const FETCH_COUNTRY_TOTALS = "FETCH_COUNTRY_INFO";
 export const FETCH_COUNTRY_DATA = "FETCH_COUNTRY_DATA";
+export const FETCH_MAP_INFO = "FETCH_MAP_INFO";
 export const SORTED_CASES = "SORTED_CASES";
 export const SORTED_DEATHS = "SORTED_DEATHS";
 export const SORTED_RECOVERED = "SORTED_RECOVERED";
 export const COUNTRIES = "COUNTRIES";
+export const MAP_ZOOM = "MAP_ZOOM";
+export const MAP_CENTER = "MAP_CENTER";
 export const MAP_COUNTRIES = "MAP_COUNTRIES";
+export const COUNTRY = "COUNTRY";
+export const COUNTRY_INFO = "COUNTRY_INFO";
+export const CASES_TYPE = "CASES_TYPE";
+export const RECOVERY_DATA = "RECOVERY_DATA";

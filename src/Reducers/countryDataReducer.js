@@ -1,4 +1,4 @@
-import { FETCH_COUNTRY_INFO } from "../constants";
+import { FETCH_COUNTRY_TOTALS } from "../constants";
 import { FETCH_COUNTRY_DATA } from "../constants";
 import { SORTED_CASES } from "../constants";
 import { SORTED_DEATHS } from "../constants";
@@ -7,7 +7,7 @@ import { COUNTRIES } from "../constants";
 import { MAP_COUNTRIES } from "../constants";
 
 const countryDataState = {
-  countryInfo: {},
+  countryTotals: {},
   countryData: [],
   casesData: [],
   deathData: [],
@@ -16,10 +16,10 @@ const countryDataState = {
   mapCountries: [],
 };
 
-export const fetchCountryInfoReducer = (state = countryDataState, action) => {
+export const fetchCountryTotalsReducer = (state = countryDataState, action) => {
   switch (action.type) {
-    case FETCH_COUNTRY_INFO:
-      return { ...state, countryInfo: action.payload };
+    case FETCH_COUNTRY_TOTALS:
+      return { ...state, countryTotals: action.payload };
     default:
       return state;
   }

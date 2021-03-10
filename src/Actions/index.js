@@ -1,4 +1,4 @@
-import { FETCH_COUNTRY_INFO } from "../constants";
+import { FETCH_COUNTRY_TOTALS } from "../constants";
 import { FETCH_COUNTRY_DATA } from "../constants";
 import { SORTED_CASES } from "../constants";
 import { SORTED_DEATHS } from "../constants";
@@ -8,12 +8,12 @@ import { MAP_COUNTRIES } from "../constants";
 
 import { sortCases, sortDeaths, sortRecovered } from "../Utilities/util";
 
-export const fetchCountryInfo = () => (dispatch) => {
+export const fetchCountryTotals = () => (dispatch) => {
   fetch("https://disease.sh/v3/covid-19/all")
     .then((response) => response.json())
     .then((data) =>
       dispatch({
-        type: FETCH_COUNTRY_INFO,
+        type: FETCH_COUNTRY_TOTALS,
         payload: data,
       })
     );
