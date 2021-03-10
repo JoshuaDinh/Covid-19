@@ -29,7 +29,6 @@ export const fetchMapInfo = () => async (dispatch, e) => {
           payload: data,
         }),
       dispatch({ type: COUNTRY, payload: countryCode }),
-
       dispatch({ type: MAP_ZOOM, payload: 2 })
     );
 };

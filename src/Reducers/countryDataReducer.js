@@ -13,10 +13,12 @@ const countryDataState = {
   deathData: [],
   recoveredData: [],
   countries: [],
-  mapCountries: [],
 };
 
-export const fetchCountryTotalsReducer = (state = countryDataState, action) => {
+export const fetchCountryTotalsReducers = (
+  state = countryDataState,
+  action
+) => {
   switch (action.type) {
     case FETCH_COUNTRY_TOTALS:
       return { ...state, countryTotals: action.payload };
@@ -25,7 +27,7 @@ export const fetchCountryTotalsReducer = (state = countryDataState, action) => {
   }
 };
 
-export const fetchCountryDataReducer = (state = countryDataState, action) => {
+export const fetchCountryDataReducers = (state = countryDataState, action) => {
   switch (action.type) {
     case FETCH_COUNTRY_DATA:
       return { ...state, countryData: action.payload };

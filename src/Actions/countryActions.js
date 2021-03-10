@@ -5,7 +5,6 @@ import { SORTED_DEATHS } from "../constants";
 import { SORTED_RECOVERED } from "../constants";
 import { COUNTRIES } from "../constants";
 import { MAP_COUNTRIES } from "../constants";
-
 import { sortCases, sortDeaths, sortRecovered } from "../Utilities/util";
 
 export const fetchCountryTotals = () => (dispatch) => {

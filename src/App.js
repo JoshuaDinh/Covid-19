@@ -14,14 +14,16 @@ import Map from "./Components/Map/Map";
 import "leaflet/dist/leaflet.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchCountryTotals } from "./Actions";
-import { fetchCountryData } from "./Actions";
+import { fetchCountryTotals } from "./Actions/countryActions";
+import { fetchCountryData } from "./Actions/countryActions";
 import { fetchMapInfo } from "./Actions/mapActions";
+import { casesType } from "./Actions/uiActions";
 
 const App = ({
   fetchCountryTotals,
   fetchCountryData,
   fetchMapInfo,
+  toggleCasesType,
   casesData,
   deathData,
   recoveredData,
@@ -32,7 +34,7 @@ const App = ({
   const [countryInfo, setCountryInfo] = useState({});
   const [mapCountries, setMapCountries] = useState([]);
   const [recoveryData, setRecoveryData] = useState([]);
-  const [casesType, setCasesType] = useState("cases");
+  // const [casesType, setCasesType] = useState("cases");
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [mapZoom, setMapZoom] = useState(3);
 
@@ -81,7 +83,7 @@ const App = ({
           <div className="app__right">
             <div>
               <InfoBox
-                onClick={(e) => setCasesType("cases")}
+                onClick={(e) => toggleCasesType("cases")}
                 title="Total Cases"
                 isRed
                 active={casesType === "cases"}
@@ -126,10 +128,10 @@ const App = ({
             <div className="app__stats">
               <InfoBox
                 secondary
-                onClick={(e) => setCasesType("recovered")}
+                onClick={() => toggleCasesType("recovered")}
                 title="Total Recovered"
                 active={casesType === "recovered"}
-                cases={prettyPrintStat(countryInfo.recovered)}
+                cases={prettyPrintStat(countryTotals.recovered)}
                 total={numeral(countryTotals.recovered).format("0.0a")}
               />
 
@@ -142,7 +144,7 @@ const App = ({
             <div className="app__stats">
               <InfoBox
                 secondary
-                onClick={(e) => setCasesType("deaths")}
+                onClick={() => toggleCasesType("deaths")}
                 title="Total  Deaths"
                 isRed
                 active={casesType === "deaths"}
@@ -171,6 +173,7 @@ const mapStateToProps = (state) => {
     recoveredData: state.countryData.recoveredData,
     countries: state.countryData.countries,
     mapCountries: state.countryData.mapcountries,
+    casesType: state.casesType.caseType,
   };
 };
 
@@ -179,6 +182,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchCountryTotals: () => dispatch(fetchCountryTotals()),
     fetchCountryData: () => dispatch(fetchCountryData()),
     fetchMapInfo: () => dispatch(fetchMapInfo()),
+    toggleCasesType: (e) => dispatch(casesType(e)),
   };
 };
 

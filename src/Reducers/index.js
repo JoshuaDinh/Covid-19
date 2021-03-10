@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
-import { fetchCountryTotalsReducer } from "../Reducers/countryDataReducer";
-import { fetchCountryDataReducer } from "../Reducers/countryDataReducer";
-import { mapReducer } from "./mapReducer";
+import { fetchCountryTotalsReducers } from "../Reducers/countryDataReducer";
+import { fetchCountryDataReducers } from "../Reducers/countryDataReducer";
+import { casesType } from "./uiReducers";
+import { mapReducers } from "./mapReducer";
 
 export const rootReducers = combineReducers({
-  countryTotals: fetchCountryTotalsReducer,
-  countryData: fetchCountryDataReducer,
-  mapInfo: mapReducer,
+  countryTotals: fetchCountryTotalsReducers,
+  countryData: fetchCountryDataReducers,
+  mapInfo: mapReducers,
+  casesType: casesType,
 });
