@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import { MenuItem, FormControl, Select } from "@material-ui/core";
+import InfoBox from "./Components/InfoBox/InfoBox";
+import Table from "./Components/Table/Table";
 import {
-  MenuItem,
-  FormControl,
-  Select,
-  Card,
-  CardContent,
-} from "@material-ui/core";
-import InfoBox from "./InfoBox";
-import Table from "./Table";
-import { sortCases, sortDeaths, sortRecovered, prettyPrintStat } from "./util";
+  sortCases,
+  sortDeaths,
+  sortRecovered,
+  prettyPrintStat,
+} from "./Utilities/util";
 import numeral from "numeral";
-import Map from "./Map";
+import Map from "./Components/Map/Map";
 import "leaflet/dist/leaflet.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const App = () => {
   const [country, setInputCountry] = useState("World Wide");
@@ -194,7 +193,7 @@ const App = () => {
             </div>
           </div>
         </div>
-      </Route>{" "}
+      </Route>
     </Router>
   );
 };
