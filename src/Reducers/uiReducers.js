@@ -1,10 +1,10 @@
 import { CASES_TYPE } from "../constants";
 
 const initialState = {
-  caseType: "",
+  casesType: "cases",
 };
 
-export const casesType = (state = initialState, action) => {
+export const casesTypeReducer = (state = initialState, action) => {
   switch (action.type) {
     case CASES_TYPE:
       return { ...state, casesType: action.payload };

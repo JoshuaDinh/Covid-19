@@ -4,7 +4,7 @@ import { SORTED_CASES } from "../constants";
 import { SORTED_DEATHS } from "../constants";
 import { SORTED_RECOVERED } from "../constants";
 import { COUNTRIES } from "../constants";
-import { MAP_COUNTRIES } from "../constants";
+import { COUNTRY } from "../constants";
 
 const countryDataState = {
   countryTotals: {},
@@ -13,6 +13,7 @@ const countryDataState = {
   deathData: [],
   recoveredData: [],
   countries: [],
+  country: "World Wide",
 };
 
 export const fetchCountryTotalsReducers = (
@@ -39,9 +40,16 @@ export const fetchCountryDataReducers = (state = countryDataState, action) => {
       return { ...state, recoveredData: action.payload };
     case COUNTRIES:
       return { ...state, countries: action.payload };
-    case MAP_COUNTRIES:
-      return { ...state, mapCountries: action.payload };
     default:
       return state;
   }
 };
+
+// export const getCountryReducer = (state = countryDataState, action) => {
+//   switch (action.type) {
+//     case COUNTRY:
+//       return { ...state, country: action.payload };
+//     default:
+//       return state;
+//   }
+// };

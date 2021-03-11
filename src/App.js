@@ -14,8 +14,11 @@ import Map from "./Components/Map/Map";
 import "leaflet/dist/leaflet.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchCountryTotals } from "./Actions/countryActions";
-import { fetchCountryData } from "./Actions/countryActions";
+import {
+  fetchCountryTotals,
+  fetchCountryData,
+  getCountry,
+} from "./Actions/countryActions";
 import { fetchMapInfo } from "./Actions/mapActions";
 import { casesType } from "./Actions/uiActions";
 
@@ -24,25 +27,45 @@ const App = ({
   fetchCountryData,
   fetchMapInfo,
   toggleCasesType,
+  casesType,
   casesData,
   deathData,
   recoveredData,
   countryTotals,
   countries,
+  // mapZoom,
+  mapCenter,
+  mapCountries,
+  country,
 }) => {
-  const [country, setInputCountry] = useState("World Wide");
-  const [countryInfo, setCountryInfo] = useState({});
-  const [mapCountries, setMapCountries] = useState([]);
-  const [recoveryData, setRecoveryData] = useState([]);
-  // const [casesType, setCasesType] = useState("cases");
-  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  // const [country, setInputCountry] = useState("World Wide");
+  // const [countryInfo, setCountryInfo] = useState({});
+  // const [mapCountries, setMapCountries] = useState([]);
+  // const [recoveryData, setRecoveryData] = useState([]);
+  // const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [mapZoom, setMapZoom] = useState(3);
 
   useEffect(() => {
+    fetchMapInfo();
     fetchCountryTotals();
     fetchCountryData();
   }, []);
 
+  // const onCountryChange = async (e) => {
+  //   const countryCode = e.target.value;
+  //   const url =
+  //     countryCode === "World Wide"
+  //       ? "https://disease.sh/v3/covid-19/all"
+  //       : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+  //   await fetch(url)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setInputCountry(countryCode);
+  //       setCountryInfo(data);
+  //       setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+  //       setMapZoom(2);
+  //     });
+  // };
   const countryCases = casesData.map((country) => {
     return (
       <tr>
@@ -101,7 +124,7 @@ const App = ({
               <Select
                 className="app__dropdown-menu"
                 value={country}
-                onChange={fetchMapInfo}
+                onChange={(e) => fetchMapInfo(e.target.value)}
               >
                 <MenuItem className="app__dropdown-menu" value={country}>
                   {country}
@@ -118,17 +141,17 @@ const App = ({
             </FormControl>
 
             <Map
-              countries={mapCountries}
-              casesType={casesType}
-              center={mapCenter}
-              zoom={mapZoom}
+            // mapCountries={mapCountries}
+            // casesType={casesType}
+            // center={mapCenter}
+            // zoom={mapZoom}
             />
           </div>
           <div className="app__stats-container">
             <div className="app__stats">
               <InfoBox
                 secondary
-                onClick={() => toggleCasesType("recovered")}
+                onClick={(text) => toggleCasesType("recovered")}
                 title="Total Recovered"
                 active={casesType === "recovered"}
                 cases={prettyPrintStat(countryTotals.recovered)}
@@ -144,7 +167,7 @@ const App = ({
             <div className="app__stats">
               <InfoBox
                 secondary
-                onClick={() => toggleCasesType("deaths")}
+                onClick={(text) => toggleCasesType("deaths")}
                 title="Total  Deaths"
                 isRed
                 active={casesType === "deaths"}
@@ -172,8 +195,9 @@ const mapStateToProps = (state) => {
     deathData: state.countryData.deathData,
     recoveredData: state.countryData.recoveredData,
     countries: state.countryData.countries,
-    mapCountries: state.countryData.mapcountries,
-    casesType: state.casesType.caseType,
+    country: state.countryData.country,
+    mapCountries: state.mapInfo.mapCountries,
+    casesType: state.casesType.casesType,
   };
 };
 
@@ -181,8 +205,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCountryTotals: () => dispatch(fetchCountryTotals()),
     fetchCountryData: () => dispatch(fetchCountryData()),
-    fetchMapInfo: () => dispatch(fetchMapInfo()),
-    toggleCasesType: (e) => dispatch(casesType(e)),
+    fetchMapInfo: (e) => dispatch(fetchMapInfo(e)),
+    toggleCasesType: (text) => dispatch(casesType(text)),
+    // updateCountry: (text) => dispatch(getCountry(text)),
   };
 };
 

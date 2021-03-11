@@ -1,6 +1,7 @@
 import React from "react";
 import numeral from "numeral";
 import { Circle, Popup } from "react-leaflet";
+import { connect } from "react-redux";
 
 const casesTypeColors = {
   cases: {
@@ -62,8 +63,8 @@ export const sortRecovered = (data) => {
 export const prettyPrintStat = (stat) =>
   stat ? `+${numeral(stat).format("0.0a")}` : "+0";
 
-export const showDataOnMap = (data, casesType = "cases") =>
-  data.map((country) => (
+export const showDataOnMap = (mapCountries, casesType = "cases") =>
+  mapCountries.map((country) => (
     <Circle
       center={[country.countryInfo.lat, country.countryInfo.long]}
       color={casesTypeColors[casesType].hex}
@@ -93,3 +94,5 @@ export const showDataOnMap = (data, casesType = "cases") =>
       </Popup>
     </Circle>
   ));
+
+export default showDataOnMap;

@@ -1,4 +1,4 @@
-import { FETCH_COUNTRY_TOTALS } from "../constants";
+import { COUNTRY, FETCH_COUNTRY_TOTALS } from "../constants";
 import { FETCH_COUNTRY_DATA } from "../constants";
 import { SORTED_CASES } from "../constants";
 import { SORTED_DEATHS } from "../constants";
@@ -34,6 +34,10 @@ export const fetchCountryData = () => (dispatch) => {
         payload: data,
       });
       dispatch({
+        type: MAP_COUNTRIES,
+        payload: data,
+      });
+      dispatch({
         type: SORTED_CASES,
         payload: sortedCases,
       });
@@ -49,9 +53,12 @@ export const fetchCountryData = () => (dispatch) => {
         type: COUNTRIES,
         payload: countries,
       });
-      dispatch({
-        type: MAP_COUNTRIES,
-        payload: data,
-      });
     });
 };
+
+// export const getCountry = (text) => {
+//   return {
+//     type: COUNTRY,
+//     payload: text,
+//   };
+// };
