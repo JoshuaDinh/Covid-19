@@ -1,10 +1,7 @@
 import React from "react";
 import "./InfoBox.css";
-import { casesType } from "../../Actions/uiActions";
-import { connect } from "react-redux";
 
 function InfoBox({ title, cases, secondary, total, active, isRed, ...props }) {
-  console.log(title, active);
   return (
     <div
       onClick={props.onClick}
